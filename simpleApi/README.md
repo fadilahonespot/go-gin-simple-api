@@ -19,7 +19,7 @@ Testing in localhost
 ```
 localhost:7861/person
 ```
-- Get Method by id
+- GET Method by id
 ```
 localhost:7861/person/id
 ```
