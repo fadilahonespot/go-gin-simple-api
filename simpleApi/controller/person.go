@@ -25,6 +25,10 @@ type Respon struct {
 	Data    interface{}
 }
 
+func (e *Person) TableName() string {
+	return "person"
+}
+
 func CreatePersonController(DB *gorm.DB, r *gin.Engine) {
 	personController := PersonController{DB}
 

@@ -2,6 +2,7 @@ package config
 
 import (
 	"log"
+	"simpleApi/controller"
 
 	"github.com/jinzhu/gorm"
 )
@@ -13,5 +14,9 @@ func DbConnect() *gorm.DB {
 		log.Fatal("Error when connect db" + consStr + " : " + err.Error())
 		return nil
 	}
+
+	db.Debug().AutoMigrate(
+		controller.Person{},
+	)
 	return db
 }
