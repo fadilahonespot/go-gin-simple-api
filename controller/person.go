@@ -13,13 +13,12 @@ type PersonController struct {
 }
 
 type Person struct {
-	ID        int  `json:"id"`
+	gorm.Model
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 }
 
 type Respon struct {
-	gorm.Model
 	Status  string `json:"status"`
 	Message string `json:"message"`
 	Data    interface{}
@@ -34,7 +33,7 @@ func CreatePersonController(DB *gorm.DB, r *gin.Engine) {
 
 	r.GET("/person", personController.viewAll)
 	r.POST("/person", personController.createPerson)
-	r.PUT("/person", personController.update)
+	r.PUT("/person/:id", personController.update)
 	r.GET("/person/:id", personController.viewById)
 	r.DELETE("/person/:id", personController.delete)
 
@@ -84,6 +83,7 @@ func (e *PersonController) createPerson(c *gin.Context) {
 }
 
 func (e *PersonController) update(c *gin.Context) {
+	id := c.Param("id")
 	var person = Person{}
 	err := c.Bind(&person)
 	if err != nil {
@@ -91,7 +91,6 @@ func (e *PersonController) update(c *gin.Context) {
 		return
 	}
 
-	id := person.ID
 	checkPerson := Person{}
 	err = e.DB.Table("person").Where("id = ?", id).First(&checkPerson).Error
 	if err != nil {
@@ -99,7 +98,7 @@ func (e *PersonController) update(c *gin.Context) {
 		return
 	}
 
-	err = e.DB.Table("person").Where("id = ?", id).Update(&person).Error
+	err = e.DB.Table("person").Where("id = ?", id).Update(&person).Find(&person).Error
 	if err != nil {
 		e.handleError(c, "failed to update data")
 		return

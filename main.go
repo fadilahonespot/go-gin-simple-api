@@ -1,9 +1,9 @@
 package main
 
 import (
+	"go-gin-simpe-api/config"
+	"go-gin-simpe-api/controller"
 	"log"
-	"simpleApi/config"
-	"simpleApi/controller"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"

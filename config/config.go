@@ -1,8 +1,8 @@
 package config
 
 import (
+	"go-gin-simpe-api/controller"
 	"log"
-	"simpleApi/controller"
 
 	"github.com/jinzhu/gorm"
 )

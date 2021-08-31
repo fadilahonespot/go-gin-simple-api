@@ -21,7 +21,7 @@ localhost:7861/person
 ```
 - GET Method by id
 ```
-localhost:7861/person/id
+localhost:7861/person/{{id}}
 ```
 ```
 example
@@ -40,12 +40,11 @@ Input body
 ```
 - PUT Method 
 ```
-localhost:7861/person
+localhost:7861/person/{{id}}
 ```
-Input body #input ID will be used to update the data
+Input body #input ID will be used to endpoin
 ```
 {
-  "id": 4,
   "first_name": "Novan",
   "last_name": "Gunawan"
 }
@@ -53,7 +52,7 @@ Input body #input ID will be used to update the data
 
 - DELETE METHOD by id
 ```
-localhost:7861/person/id
+localhost:7861/person/{{id}}
 ```
 
 ## Contributing
