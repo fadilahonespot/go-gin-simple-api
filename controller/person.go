@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"go-gin-simpe-api/models"
 	"net/http"
 	"strconv"
 
@@ -12,11 +13,6 @@ type PersonController struct {
 	DB *gorm.DB
 }
 
-type Person struct {
-	gorm.Model
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-}
 
 type Respon struct {
 	Status  string `json:"status"`
@@ -24,9 +20,6 @@ type Respon struct {
 	Data    interface{}
 }
 
-func (e *Person) TableName() string {
-	return "person"
-}
 
 
 func (e *PersonController) handleSucces(c *gin.Context, data interface{}) {
@@ -47,7 +40,7 @@ func (e *PersonController) handleError(c *gin.Context, message string) {
 }
 
 func (e *PersonController) ViewAll(c *gin.Context) {
-	var person []Person
+	var person []models.Person
 	err := e.DB.Table("person").Find(&person).Error
 	if err != nil {
 		e.handleError(c, "Ooppss server somting wrong")
@@ -57,7 +50,7 @@ func (e *PersonController) ViewAll(c *gin.Context) {
 }
 
 func (e *PersonController) CreatePerson(c *gin.Context) {
-	var person = Person{}
+	var person = models.Person{}
 	err := c.Bind(&person)
 	if err != nil {
 		e.handleError(c, "failed to insert data")
@@ -74,14 +67,14 @@ func (e *PersonController) CreatePerson(c *gin.Context) {
 
 func (e *PersonController) Update(c *gin.Context) {
 	id := c.Param("id")
-	var person = Person{}
+	var person = models.Person{}
 	err := c.Bind(&person)
 	if err != nil {
 		e.handleError(c, "internal server error")
 		return
 	}
 
-	checkPerson := Person{}
+	checkPerson := models.Person{}
 	err = e.DB.Table("person").Where("id = ?", id).First(&checkPerson).Error
 	if err != nil {
 		e.handleError(c, "id is not exis")
@@ -103,7 +96,7 @@ func (e *PersonController) ViewById(c *gin.Context) {
 		e.handleError(c, "id has be number")
 		return
 	}
-	var person = Person{}
+	var person = models.Person{}
 	err = e.DB.Table("person").Where("id = ?", id).First(&person).Error
 	if err != nil {
 		e.handleError(c, "id not exsis")
@@ -119,7 +112,7 @@ func (e *PersonController) Delete(c *gin.Context) {
 		e.handleError(c, "id has be number")
 		return
 	}
-	var person = Person{}
+	var person = models.Person{}
 	err = e.DB.Table("person").Where("id = ?", id).First(&person).Error
 	if err != nil {
 		e.handleError(c, "id not exsis")

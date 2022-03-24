@@ -1,29 +1,15 @@
 package routers
 
 import (
+	"go-gin-simpe-api/controller"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"go-gin-simpe-api/controller"
 )
 
 type PersonController struct {
 	DB *gorm.DB
 }
-
-// func SetupRouter() *gin.Engine {
-// 	r := gin.Default()
-
-// 	v1 := r.Group("/v1")
-// 	{
-// 		v1.GET("book", controller.ListBook)
-// 	v1.POST("book", Controllers.AddNewBook)
-// 	v1.GET("book/:id", Controllers.GetOneBook)
-// 	v1.PUT("book/:id", Controllers.PutOneBook)
-// 	v1.DELETE("book/:id", Controllers.DeleteBook)
-// 	}
-
-// 	return r
-// }
 
 func SetupRouter(DB *gorm.DB, r *gin.Engine) {
 	personController := controller.PersonController{DB}
