@@ -28,16 +28,6 @@ func (e *Person) TableName() string {
 	return "person"
 }
 
-func CreatePersonController(DB *gorm.DB, r *gin.Engine) {
-	personController := PersonController{DB}
-
-	r.GET("/person", personController.viewAll)
-	r.POST("/person", personController.createPerson)
-	r.PUT("/person/:id", personController.update)
-	r.GET("/person/:id", personController.viewById)
-	r.DELETE("/person/:id", personController.delete)
-
-}
 
 func (e *PersonController) handleSucces(c *gin.Context, data interface{}) {
 	var returnData = Respon{
@@ -56,7 +46,7 @@ func (e *PersonController) handleError(c *gin.Context, message string) {
 	c.JSON(http.StatusBadRequest, returnData)
 }
 
-func (e *PersonController) viewAll(c *gin.Context) {
+func (e *PersonController) ViewAll(c *gin.Context) {
 	var person []Person
 	err := e.DB.Table("person").Find(&person).Error
 	if err != nil {
@@ -66,7 +56,7 @@ func (e *PersonController) viewAll(c *gin.Context) {
 	e.handleSucces(c, person)
 }
 
-func (e *PersonController) createPerson(c *gin.Context) {
+func (e *PersonController) CreatePerson(c *gin.Context) {
 	var person = Person{}
 	err := c.Bind(&person)
 	if err != nil {
@@ -82,7 +72,7 @@ func (e *PersonController) createPerson(c *gin.Context) {
 	e.handleSucces(c, person)
 }
 
-func (e *PersonController) update(c *gin.Context) {
+func (e *PersonController) Update(c *gin.Context) {
 	id := c.Param("id")
 	var person = Person{}
 	err := c.Bind(&person)
@@ -106,7 +96,7 @@ func (e *PersonController) update(c *gin.Context) {
 	e.handleSucces(c, person)
 }
 
-func (e *PersonController) viewById(c *gin.Context) {
+func (e *PersonController) ViewById(c *gin.Context) {
 	strId := c.Param("id")
 	id, err := strconv.Atoi(strId)
 	if err != nil {
@@ -122,7 +112,7 @@ func (e *PersonController) viewById(c *gin.Context) {
 	e.handleSucces(c, person)
 }
 
-func (e *PersonController) delete(c *gin.Context) {
+func (e *PersonController) Delete(c *gin.Context) {
 	strId := c.Param("id")
 	id, err := strconv.Atoi(strId)
 	if err != nil {
