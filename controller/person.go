@@ -13,7 +13,7 @@ type PersonController struct {
 
 func (e *PersonController) ViewAll(c *gin.Context) {
 	var person []models.Person
-	err := e.DB.Table("person").Find(&person).Error
+	err := e.DB.Table("persons").Find(&person).Error
 	if err != nil {
 		respon.HandleError(c, "Ooppss server somting wrong")
 		return
@@ -29,7 +29,7 @@ func (e *PersonController) CreatePerson(c *gin.Context) {
 		return
 	}
 
-	err = e.DB.Table("person").Save(&person).Error
+	err = e.DB.Table("persons").Save(&person).Error
 	if err != nil {
 		respon.HandleError(c, "Oppsss server somting wrong")
 		return
@@ -47,13 +47,13 @@ func (e *PersonController) Update(c *gin.Context) {
 	}
 
 	checkPerson := models.Person{}
-	err = e.DB.Table("person").Where("id = ?", id).First(&checkPerson).Error
+	err = e.DB.Table("persons").Where("id = ?", id).First(&checkPerson).Error
 	if err != nil {
 		respon.HandleError(c, "id is not exis")
 		return
 	}
 
-	err = e.DB.Table("person").Where("id = ?", id).Update(&person).Find(&person).Error
+	err = e.DB.Table("persons").Where("id = ?", id).Update(&person).Find(&person).Error
 	if err != nil {
 		respon.HandleError(c, "failed to update data")
 		return
@@ -69,7 +69,7 @@ func (e *PersonController) ViewById(c *gin.Context) {
 		return
 	}
 	var person = models.Person{}
-	err = e.DB.Table("person").Where("id = ?", id).First(&person).Error
+	err = e.DB.Table("persons").Where("id = ?", id).First(&person).Error
 	if err != nil {
 		respon.HandleError(c, "id not exsis")
 		return
@@ -85,13 +85,13 @@ func (e *PersonController) Delete(c *gin.Context) {
 		return
 	}
 	var person = models.Person{}
-	err = e.DB.Table("person").Where("id = ?", id).First(&person).Error
+	err = e.DB.Table("persons").Where("id = ?", id).First(&person).Error
 	if err != nil {
 		respon.HandleError(c, "id not exsis")
 		return
 	}
 
-	err = e.DB.Table("person").Where("id = ?", id).Delete(&person).Error
+	err = e.DB.Table("persons").Where("id = ?", id).Delete(&person).Error
 	if err != nil {
 		respon.HandleError(c, "failed delete data")
 		return
