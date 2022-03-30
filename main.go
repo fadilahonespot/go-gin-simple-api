@@ -10,17 +10,15 @@ import (
 )
 
 func main() {
-	port := "7861"
+
 
 	db := config.DbConnect()
 	defer db.Close()
 
-	// r := router.SetupRouter()
-
 	r := gin.Default()
 	routers.SetupRouter(db, r)
 	
-	err := r.Run(":" + port)
+	err := r.Run()
 	if err != nil {
 		log.Fatal(err)
 	}
