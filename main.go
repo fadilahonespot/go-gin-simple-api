@@ -2,7 +2,7 @@ package main
 
 import (
 	"go-gin-simpe-api/config"
-	"go-gin-simpe-api/controller"
+	"go-gin-simpe-api/routers"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -15,10 +15,12 @@ func main() {
 	db := config.DbConnect()
 	defer db.Close()
 
-	router := gin.Default()
-	controller.CreatePersonController(db, router)
+	// r := router.SetupRouter()
+
+	r := gin.Default()
+	routers.SetupRouter(db, r)
 	
-	err := router.Run(":" + port)
+	err := r.Run(":" + port)
 	if err != nil {
 		log.Fatal(err)
 	}
