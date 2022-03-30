@@ -1,8 +1,9 @@
 package config
 
 import (
-	"go-gin-simpe-api/models"
+	models "go-gin-simpe-api/Models"
 	"log"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -16,6 +17,7 @@ func DbConnect() *gorm.DB {
 
 	db.Debug().AutoMigrate(
 		models.Person{},
+		models.Article{},
 	)
 	return db
 }

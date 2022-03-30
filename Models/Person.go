@@ -9,5 +9,7 @@ type Person struct {
 }
 
 func (e *Person) TableName() string {
-	return "person"
+	return "persons"
 }
+ 
+
